@@ -1,0 +1,14 @@
+#!/bin/sh
+if ! ip addr | grep -q <%= @vip %>; then
+    # we aren't in control of this virtual ip
+    # no need to check if our haproxy is working
+    exit 0
+fi
+if curl -ksm2 https://<%= @vip %>:6443/healthz; then
+    # curl seems to be able to access the kube api
+    # since we have the ip, that means our haproxy is working
+    # cool, we're done
+    exit 0
+fi
+# haproxy isn't working! panic
+exit 1
