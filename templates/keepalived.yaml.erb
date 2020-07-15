@@ -4,6 +4,9 @@ metadata:
   creationTimestamp: null
   name: kubeapi-keepalived
   namespace: kube-system
+  labels:
+    component: kube-apiserver-lb
+    tier: control-plane
 spec:
   containers:
   - image: <%= @keepalived_image %>

@@ -3,6 +3,9 @@ kind: Pod
 metadata:
   name: kubeapi-haproxy
   namespace: kube-system
+  labels:
+    component: kube-apiserver-lb
+    tier: control-plane
 spec:
   containers:
   - image: <%= @haproxy_image %>
