@@ -21,8 +21,10 @@ spec:
     volumeMounts:
     - mountPath: /etc/keepalived/keepalived.conf
       name: config
+      readOnly: true
     - mountPath: /etc/keepalived/check_apiserver.sh
       name: checker
+      readOnly: true
   hostNetwork: true
   volumes:
   - hostPath:
