@@ -1,9 +1,8 @@
-# @summary A short summary of the purpose of this class
-#
-# A description of what this class does
+# @summary Class with all the relevant classes for additional control plane nodes to run
 #
 # @example
 #   include protogalaxy::role::control
+
 class protogalaxy::role::control {
   contain protogalaxy::disable_swap
   contain protogalaxy::packages

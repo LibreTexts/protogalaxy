@@ -1,9 +1,17 @@
 # @summary A short summary of the purpose of this class
 #
-# A description of what this class does
+# @param k8s_version
+#   Version of the kubeadm, kubelet and kubectl packages to install.
+#
+# @param docker_version
+#   Version of docker-ce to install.
 #
 # @example
-#   include protogalaxy::packages
+#   include protogalaxy::packages {
+#     k8s_version => '1.18.5',
+#     docker_version => '5:19.03.12~3-0~ubuntu-bionic',
+#   }
+
 class protogalaxy::packages (
   String $k8s_version = $protogalaxy::k8s_version,
   String $docker_version = $protogalaxy::docker_version,

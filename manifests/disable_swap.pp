@@ -1,9 +1,8 @@
-# @summary Disables swap
-#
-# Ensure the swap is disabled on the node.
+# @summary Class to ensure swap is disabled on the node.
 #
 # @example
 #   include protogalaxy::disable_swap
+
 class protogalaxy::disable_swap {
   exec { 'disable swap':
     command => '/sbin/swapoff -a',

@@ -1,6 +1,4 @@
-# @summary A short summary of the purpose of this class
-#
-# A description of what this class does
+# @summary Class with all the relevant classes for worker nodes to run
 #
 # @example
 #   include protogalaxy::role::worker

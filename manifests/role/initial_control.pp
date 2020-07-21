@@ -1,9 +1,8 @@
-# @summary A short summary of the purpose of this class
-#
-# A description of what this class does
+# @summary Class with all the relevant classes for the initial control plane node to run
 #
 # @example
 #   include protogalaxy::role::initial_control
+
 class protogalaxy::role::initial_control {
   contain protogalaxy::disable_swap
   contain protogalaxy::packages

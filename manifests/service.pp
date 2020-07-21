@@ -1,9 +1,8 @@
-# @summary A short summary of the purpose of this class
-#
-# A description of what this class does
+# @summary Class to ensure the docker service and kubelet service are always running
 #
 # @example
 #   include protogalaxy::service
+
 class protogalaxy::service {
   service { 'docker':
     ensure  => running,

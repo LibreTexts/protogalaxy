@@ -1,7 +1,10 @@
-# @summary A short summary of the purpose of this class
+# @summary Create keepalived static pod
 #
-# A description of what this class does
-#
+# Create the keepalived static pod by placing its yaml in /etc/kubernetes/manifests
+# and its relevant config file in /etc/kubernetes/keepalived.conf.
+# This will make sure one and only one HAProxy will control the kubeapi IP address.
+# This should be created on all control plane nodes.
+
 # @example
 #   include protogalaxy::loadbalancer_static_pods::keepalived
 class protogalaxy::loadbalancer_static_pods::keepalived (
