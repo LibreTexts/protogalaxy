@@ -23,17 +23,17 @@ class protogalaxy::bootstrap::control_join (
   String $certkey = $protogalaxy::certkey,
 ) {
   exec { 'kubeadm join cluster as control plane node':
-    command => '/usr/bin/kubeadm join' +
-      "https://${kubeapi_ip}:6443/" +
-      '--control-plane' +
-      "--discovery-token ${discovery_token}" +
-      '--discovery-token-unsafe-skip-ca-verification' +
-      "--certificate-key ${certkey}",
+    command => join(['/usr/bin/kubeadm join',
+      "https://${kubeapi_ip}:6443/",
+      '--control-plane',
+      "--discovery-token ${discovery_token}",
+      '--discovery-token-unsafe-skip-ca-verification',
+      "--certificate-key ${certkey}"], ' '),
     creates => '/etc/kubernetes/kubelet.conf',
     require => [
       Service['kubelet'],
       Package['kubeadm'],
-      protogalaxy::loadbalancer_static_pods,
+      Class['protogalaxy::loadbalancer_static_pods'],
     ],
   }
 }

@@ -15,7 +15,7 @@ class protogalaxy::service {
     require => [
       Service['docker'],
       Package['kubelet'],
-      protogalaxy::disable_swap,
+      Class['protogalaxy::disable_swap'],
     ],
   }
 }

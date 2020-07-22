@@ -32,7 +32,7 @@ class protogalaxy::bootstrap::kubeadm_init (
     require => [
       Service['kubelet'],
       Package['kubeadm'],
-      protogalaxy::loadbalancer_static_pods,
+      Class['protogalaxy::loadbalancer_static_pods'],
     ],
   }
 }

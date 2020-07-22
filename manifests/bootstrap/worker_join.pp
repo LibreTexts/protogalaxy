@@ -17,10 +17,10 @@ class protogalaxy::bootstrap::worker_join (
   String $discovery_token = $protogalaxy::discovery_token,
 ) {
   exec { 'kubeadm join cluster as worker':
-    command => '/usr/bin/kubeadm join' +
-      "https://${kubeapi_ip}:6443/" +
-      "--discovery-token ${discovery_token}" +
-      '--discovery-token-unsafe-skip-ca-verification',
+    command => join(['/usr/bin/kubeadm join',
+      "https://${kubeapi_ip}:6443/",
+      "--discovery-token ${discovery_token}",
+      '--discovery-token-unsafe-skip-ca-verification'], ' '),
     creates => '/etc/kubernetes/kubelet.conf',
     require => [
       Service['kubelet'],

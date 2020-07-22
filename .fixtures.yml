@@ -4,3 +4,4 @@
 fixtures:
   forge_modules:
     apt: 'puppetlabs-apt'
+    stdlib: 'puppetlabs-stdlib'
