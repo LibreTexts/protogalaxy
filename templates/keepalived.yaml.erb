@@ -28,9 +28,9 @@ spec:
   hostNetwork: true
   volumes:
   - hostPath:
-      path: /etc/keepalived/keepalived.conf
+      path: /etc/kubernetes/keepalived.conf
     name: config
   - hostPath:
-      path: /etc/keepalived/check_apiserver.sh
-    name: check
+      path: /etc/kubernetes/check_apiserver.sh
+    name: checker
 status: {}

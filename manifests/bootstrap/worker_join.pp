@@ -18,7 +18,7 @@ class protogalaxy::bootstrap::worker_join (
 ) {
   exec { 'kubeadm join cluster as worker':
     command => join(['/usr/bin/kubeadm join',
-      "https://${kubeapi_ip}:6443/",
+      "${kubeapi_ip}:6443",
       "--discovery-token ${discovery_token}",
       '--discovery-token-unsafe-skip-ca-verification'], ' '),
     creates => '/etc/kubernetes/kubelet.conf',

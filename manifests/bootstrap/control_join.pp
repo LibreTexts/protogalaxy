@@ -21,14 +21,22 @@ class protogalaxy::bootstrap::control_join (
   String $kubeapi_ip = $protogalaxy::kubeapi_ip,
   String $discovery_token = $protogalaxy::discovery_token,
   String $certkey = $protogalaxy::certkey,
+  Optional[String] $interface = $protogalaxy::network_interface
 ) {
+  if ($interface) {
+    $advertise_arg = "--apiserver-advertise-address ${facts['networking']['interfaces'][$interface]['ip']}"
+  } else {
+    $advertise_arg = ''
+  }
   exec { 'kubeadm join cluster as control plane node':
     command => join(['/usr/bin/kubeadm join',
-      "https://${kubeapi_ip}:6443/",
+      "${kubeapi_ip}:6443",
       '--control-plane',
       "--discovery-token ${discovery_token}",
       '--discovery-token-unsafe-skip-ca-verification',
-      "--certificate-key ${certkey}"], ' '),
+      "--certificate-key ${certkey}",
+      '--ignore-preflight-errors=DirAvailable--etc-kubernetes-manifests',
+      $advertise_arg], ' '),
     creates => '/etc/kubernetes/kubelet.conf',
     require => [
       Service['kubelet'],

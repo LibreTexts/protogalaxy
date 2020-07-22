@@ -21,13 +21,20 @@ class protogalaxy::bootstrap::kubeadm_init (
   String $kubeapi_ip = $protogalaxy::kubeapi_ip,
   String $discovery_token = $protogalaxy::discovery_token,
   String $certkey = $protogalaxy::certkey,
+  Optional[String] $interface = $protogalaxy::network_interface
 ) {
+  if ($interface) {
+    $advertise_arg = "--apiserver-advertise-address ${facts['networking']['interfaces'][$interface]['ip']}"
+  } else {
+    $advertise_arg = ''
+  }
   exec { 'kubeadm initialize cluster':
     command => join(['/usr/bin/kubeadm init',
-      "--control-plane-endpoint https://${kubeapi_ip}:6443/",
+      "--control-plane-endpoint ${kubeapi_ip}",
       '--upload-certs',
       "--token ${discovery_token}",
-      "--certificate-key ${certkey}"], ' '),
+      "--certificate-key ${certkey}",
+      $advertise_arg], ' '),
     creates => '/etc/kubernetes/kubelet.conf',
     require => [
       Service['kubelet'],

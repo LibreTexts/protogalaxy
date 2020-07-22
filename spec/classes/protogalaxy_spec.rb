@@ -24,6 +24,22 @@ describe 'protogalaxy' do
       } end
       it { is_expected.to compile }
     end
+    context "init control plane node with custom interface on #{os}" do
+      let(:facts) { os_facts }
+      let(:params) do {
+        'role' => 'initial_control',
+        'network_interface' => os_facts[:networking]['primary']
+      } end
+      it { is_expected.to compile }
+    end
+    context "additional control plane node with custom interface on #{os}" do
+      let(:facts) { os_facts }
+      let(:params) do {
+        'role' => 'control',
+        'network_interface' => os_facts[:networking]['primary']
+      } end
+      it { is_expected.to compile }
+    end
     context "worker node on #{os}" do
       let(:facts) { os_facts }
       let(:params) do {
