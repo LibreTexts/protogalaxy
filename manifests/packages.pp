@@ -45,7 +45,7 @@ class protogalaxy::packages (
   }
 
   package { ['kubelet', 'kubectl', 'kubeadm']:
-    ensure  => $k8s_version + '-00',
+    ensure  => "${k8s_version}-00",
     mark    => hold,
     require => Class['Apt::Update'],
   }

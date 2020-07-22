@@ -39,6 +39,10 @@
 # @param haproxy_image
 #   Docker image to be used for the HAProxy static pod.
 #   Defaults to haproxy:2.2-alpine
+#
+# @example
+#   include protogalaxy {
+#     
 
 class protogalaxy (
   String $kubeapi_ip,

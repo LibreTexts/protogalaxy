@@ -1,0 +1,7 @@
+---
+protogalaxy::kubeapi_ip: 172.16.10.2
+protogalaxy::discovery_token: galaxy.8f66ffbc65a6d861
+protogalaxy::certkey: 0e1fe290a032cb3c110ffcde37d93e104b4f560544b1207836d88a093d20982f
+protogalaxy::control_plane_nodes:
+  - "nebula0:172.16.10.50"
+  - "nebula1:172.16.10.51"

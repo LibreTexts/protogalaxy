@@ -12,7 +12,7 @@
 #
 # @example
 #   include protogalaxy::bootstrap::kubeadm_init {
-#     kubeapi_ip     => '172.16.10.25',
+#     kubeapi_ip      => '172.16.10.25',
 #     discovery_token => 'galaxy.8f66ffbc65a6d861',
 #     certkey         => '0e1fe290a032cb3c110ffcde37d93e104b4f560544b1207836d88a093d20982f',
 #   }
@@ -23,11 +23,11 @@ class protogalaxy::bootstrap::kubeadm_init (
   String $certkey = $protogalaxy::certkey,
 ) {
   exec { 'kubeadm initialize cluster':
-    command => '/usr/bin/kubeadm init' +
-      "--control-plane-endpoint https://${kubeapi_ip}:6443/" +
-      '--upload-certs' +
-      "--token ${discovery_token}" +
-      "--certificate-key ${certkey}",
+    command => join(['/usr/bin/kubeadm init',
+      "--control-plane-endpoint https://${kubeapi_ip}:6443/",
+      '--upload-certs',
+      "--token ${discovery_token}",
+      "--certificate-key ${certkey}"], ' '),
     creates => '/etc/kubernetes/kubelet.conf',
     require => [
       Service['kubelet'],

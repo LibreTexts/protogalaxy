@@ -2,9 +2,9 @@
   "name": "rkevin-protogalaxy",
   "version": "0.1.0",
   "author": "rkevin",
-  "summary": "",
+  "summary": "Initializes a HA k8s cluster using kubeadm",
   "license": "Apache-2.0",
-  "source": "",
+  "source": "https://github.com/LibreTexts/protogalaxy",
   "dependencies": [
 
   ],
