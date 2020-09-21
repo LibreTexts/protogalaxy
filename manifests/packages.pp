@@ -61,7 +61,7 @@ class protogalaxy::packages (
       package { 'kubectl':
         ensure  => "${k8s_version}-00",
         mark    => hold,
-        require => Class['Apt:Update'],
+        require => Class['Apt::Update'],
       }
     }
   }
