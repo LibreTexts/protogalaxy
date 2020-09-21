@@ -60,6 +60,7 @@ class protogalaxy (
     'initial_control': { include protogalaxy::role::initial_control }
     'control':         { include protogalaxy::role::control }
     'worker':          { include protogalaxy::role::worker }
+    'management':      { include protogalaxy::role::management }
     default:           { }
   }
 }
