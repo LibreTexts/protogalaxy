@@ -46,7 +46,7 @@ class protogalaxy::packages (
   }
 
   case $role {
-    'control', 'worker': {
+    'initial_control', 'control', 'worker': {
       package { 'docker-ce':
         ensure  => $docker_version,
         require => Class['Apt::Update'],
