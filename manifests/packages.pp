@@ -6,6 +6,9 @@
 # @param docker_version
 #   Version of docker-ce to install.
 #
+# @param role
+#   Role of node given by site.pp
+#
 # @example
 #   include protogalaxy::packages {
 #     k8s_version => '1.18.5',
@@ -15,6 +18,7 @@
 class protogalaxy::packages (
   String $k8s_version = $protogalaxy::k8s_version,
   String $docker_version = $protogalaxy::docker_version,
+  String $role = $protogalaxy::role,
 ){
 
   if $facts['os']['distro']['codename'] != 'bionic' {
@@ -41,14 +45,24 @@ class protogalaxy::packages (
     }
   }
 
-  package { 'docker-ce':
-    ensure  => $docker_version,
-    require => Class['Apt::Update'],
-  }
-
-  package { ['kubelet', 'kubectl', 'kubeadm']:
-    ensure  => "${k8s_version}-00",
-    mark    => hold,
-    require => Class['Apt::Update'],
+  case $role {
+    'control', 'worker': {
+      package { 'docker-ce':
+        ensure  => $docker_version,
+        require => Class['Apt::Update'],
+      }
+      package { ['kubelet', 'kubectl', 'kubeadm']:
+        ensure  => "${k8s_version}-00",
+        mark    => hold,
+        require => Class['Apt::Update'],
+      }
+    }
+    'management': {
+      package { 'kubectl':
+        ensure  => "${k8s_version}-00",
+        mark    => hold,
+        require => Class['Apt:Update'],
+      }
+    }
   }
 }

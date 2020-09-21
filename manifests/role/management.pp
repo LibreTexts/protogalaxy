@@ -4,4 +4,5 @@
 #   include protogalaxy::role::management
 
 class protogalaxy::role::management {
+  contain protogalaxy::packages
 }
