@@ -65,7 +65,7 @@ class protogalaxy::packages (
       }
       $latest_helm_version = @(EOF/L)
         $(curl -Ls https://github.com/helm/helm/releases | \
-        grep href="/helm/helm/releases/tag/v3.[0-9]*.[0-9]*\"' | \
+        grep 'href="/helm/helm/releases/tag/v3.[0-9]*.[0-9]*\"' | \
         grep -v no-underline | head -n 1 | cut -d '"' -f 2 | \
         awk '{n=split($NF,a,"/");print a[n]}' | awk 'a !~ $0{print}; {a=$0}')
         | - EOF
