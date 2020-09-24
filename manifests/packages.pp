@@ -71,7 +71,7 @@ class protogalaxy::packages (
         | - EOF
       exec { "curl -sL https://get.helm.sh/helm-${latest_helm_version}-linux-amd64.tar.gz | tar zxO linux-amd64/helm > /usr/local/bin/helm":
         provider => shell,
-        unless   => "test -a /usr/local/bin/helm -a $(helm version --template '{{.Version}}') == ${latest_helm_version}",
+        unless   => "test -e /usr/local/bin/helm -a $(helm version --template '{{.Version}}') == ${latest_helm_version}",
       }
     }
     default: {}
