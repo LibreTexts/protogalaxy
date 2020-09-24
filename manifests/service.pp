@@ -4,6 +4,7 @@
 #   include protogalaxy::service
 
 class protogalaxy::service {
+  contain protogalaxy::packages
   service { 'docker':
     ensure  => running,
     enable  => true,
