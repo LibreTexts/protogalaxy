@@ -40,9 +40,11 @@
 #   Docker image to be used for the HAProxy static pod.
 #   Defaults to haproxy:2.2-alpine
 #
-# @example
-#   include protogalaxy {
-#     
+# @param upgrading_cluster
+#   Boolean to indicate you're doing cluster upgrades.
+#   Since cluster upgrades should be done manually, this turns of package pinning for kubelet.
+#   kubeadm and kubectl are still enforced, so you can use this module to upgrade all kubeadm versions.
+#   See the README in galaxy-control-repo for upgrade documentation.
 
 class protogalaxy (
   String $kubeapi_ip,

@@ -65,6 +65,17 @@ describe 'protogalaxy' do
 
       it { is_expected.to compile }
     end
+    context "worker node during a cluster upgrade on #{os}" do
+      let(:facts) { os_facts }
+      let(:params) do
+        {
+          'role' => 'worker',
+          'upgrading_cluster' => true,
+        }
+      end
+
+      it { is_expected.to compile }
+    end
     context "management node on #{os}" do
       let(:facts) { os_facts }
       let(:params) do
