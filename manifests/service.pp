@@ -15,15 +15,16 @@ class protogalaxy::service (
     enable  => true,
     require => Package['docker-ce'],
   }
-  unless $upgrading_cluster {
-    service { 'kubelet':
-      ensure  => running,
-      enable  => true,
-      require => [
-        Service['docker'],
-        Package['kubelet'],
-        Class['protogalaxy::disable_swap'],
-      ],
-    }
+  service { 'kubelet':
+    ensure  => running,
+    enable  => true,
+    require => [
+      Service['docker'],
+      $upgrading_cluster ? {
+        true  => undef,
+        false => Package['kubelet'],
+      },
+      Class['protogalaxy::disable_swap'],
+    ],
   }
 }
