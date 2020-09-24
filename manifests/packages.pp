@@ -63,6 +63,17 @@ class protogalaxy::packages (
         mark    => hold,
         require => Class['Apt::Update'],
       }
+      $latest_helm_version = @(EOF)
+        $(curl -Ls https://github.com/helm/helm/releases | \
+        grep href="/helm/helm/releases/tag/v3.[0-9]*.[0-9]*\"' | \
+        grep -v no-underline | head -n 1 | cut -d '"' -f 2 | \
+        awk '{n=split($NF,a,"/");print a[n]}' | awk 'a !~ $0{print}; {a=$0}')
+        | - EOF
+      exec { "curl -sL https://get.helm.sh/helm-${latest_helm_version}-linux-amd64.tar.gz | tar zxO linux-amd64/helm > /usr/local/bin/helm":
+        provider => shell,
+        unless   => "test -a /usr/local/bin/helm -a $(helm version --template '{{.Version}}') == ${latest_helm_version}",
+      }
     }
+    default: {}
   }
 }
