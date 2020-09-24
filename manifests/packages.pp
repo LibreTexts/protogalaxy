@@ -63,7 +63,7 @@ class protogalaxy::packages (
         mark    => hold,
         require => Class['Apt::Update'],
       }
-      $latest_helm_version = @(EOF)
+      $latest_helm_version = @(EOF/L)
         $(curl -Ls https://github.com/helm/helm/releases | \
         grep href="/helm/helm/releases/tag/v3.[0-9]*.[0-9]*\"' | \
         grep -v no-underline | head -n 1 | cut -d '"' -f 2 | \
