@@ -11,7 +11,7 @@
 #
 # @param upgrading_cluster
 #   If this boolean is true, do not enforce versions on kubelet.
-
+#
 # @example
 #   include protogalaxy::packages {
 #     k8s_version => '1.18.5',
