@@ -57,6 +57,7 @@ class protogalaxy (
   Optional[String] $network_interface = undef,
   String $keepalived_image = 'rkevin/keepalived:2.0.20',
   String $haproxy_image = 'haproxy:2.2-alpine',
+  Boolean $upgrading_cluster = false,
 ) {
   case $role {
     'initial_control': { include protogalaxy::role::initial_control }
