@@ -65,5 +65,15 @@ describe 'protogalaxy' do
 
       it { is_expected.to compile }
     end
+    context "management node on #{os}" do
+      let(:facts) { os_facts }
+      let(:params) do
+        {
+          'role' => 'management',
+        }
+      end
+
+      it { is_expected.to compile }
+    end
   end
 end
