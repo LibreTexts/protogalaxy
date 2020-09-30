@@ -28,7 +28,7 @@ class protogalaxy::loadbalancer_static_pods::haproxy (
     ensure  => file,
     owner   => 'root',
     group   => 'root',
-    mode    => '0644',
+    mode    => '0600',
     content => template('protogalaxy/haproxy.yaml.erb'),
     notify  => [Service['kubelet'],],
   }

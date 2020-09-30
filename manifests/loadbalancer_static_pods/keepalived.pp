@@ -36,7 +36,7 @@ class protogalaxy::loadbalancer_static_pods::keepalived (
     ensure  => file,
     owner   => 'root',
     group   => 'root',
-    mode    => '0644',
+    mode    => '0600',
     content => template('protogalaxy/keepalived.yaml.erb'),
     notify  => [Service['kubelet'],],
   }
