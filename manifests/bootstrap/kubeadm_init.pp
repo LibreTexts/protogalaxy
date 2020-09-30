@@ -1,4 +1,4 @@
-# @summary Class for initializing additional control plane nodes of the cluster
+# @summary Class for initializing the first control plane node of the cluster
 #
 # @param kubeapi_ip
 #   The virtual IP that acts as the load balancer for the kube API server
