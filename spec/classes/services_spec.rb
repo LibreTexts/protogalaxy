@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'protogalaxy::bootstrap::kubeadm_init' do
+describe 'protogalaxy::services' do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:facts) { os_facts }

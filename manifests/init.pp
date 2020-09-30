@@ -22,11 +22,6 @@
 # @param docker_version
 #   Version of docker to install. Defaults to 5:19.03.12~3-0~ubuntu-bionic.
 #
-# @param role
-#   A string indicating what this node is supposed to be. Can be 'initial_control'
-#   for the first control plane node, 'control' for additional control plane nodes,
-#   'worker' for worker nodes, or empty to indicate you don't want to add it to the cluster.
-#
 # @param network_interface
 #   Specify the network interface where the other nodes are reachable.
 #   If this is your default interface, you may omit it.
@@ -49,26 +44,19 @@
 # @param reset_cluster
 #   Boolean to include only the manifest for resetting the cluster with kubeadm
 
-class protogalaxy (
-  String $kubeapi_ip,
-  String $discovery_token,
-  String $certkey,
-  Array[String] $control_plane_nodes,
-  String $k8s_version = '1.18.5',
-  String $docker_version = '5:19.03.12~3-0~ubuntu-bionic',
-  String $role = '',
-  Optional[String] $network_interface = undef,
-  String $keepalived_image = 'rkevin/keepalived:2.0.20',
-  String $haproxy_image = 'haproxy:2.2-alpine',
-  Boolean $upgrading_cluster = false,
-  Boolean $reset_cluster = false,
-) {
-  case $role {
-    'initial_control': { include protogalaxy::role::initial_control }
-    'control':         { include protogalaxy::role::control }
-    'worker':          { include protogalaxy::role::worker }
-    'management':      { include protogalaxy::role::management }
-    default:           { }
-  }
-}
+class protogalaxy {
+  # This class only defines the variables used in the module.
+  # To actually use this module, please include one of the protogalaxy::role::* classes
 
+  $kubeapi_ip = lookup('protogalaxy::kubeapi_ip', String, first)
+  $discovery_token = lookup('protogalaxy::kubeapi_ip', String, first)
+  $certkey = lookup('protogalaxy::certkey', String, first)
+  $control_plane_nodes = lookup('protogalaxy::control_plane_nodes', Array[String], first)
+  $k8s_version = lookup('protogalaxy::k8s_version', String, first, '1.19.2')
+  $docker_version = lookup('protogalaxy::docker_version', String, first, '5:19.03.13~3-0~ubuntu-bionic')
+  $network_interface = lookup('protogalaxy::network_interface', Optional[String], first, undef)
+  $keepalived_image = lookup('protogalaxy::keepalived_image', String, first, 'rkevin/keepalived:2.0.20')
+  $haproxy_image = lookup('protogalaxy::haproxy_image', String, first, 'haproxy:2.2-alpine')
+  $upgrading_cluster = lookup('protogalaxy::upgrading_cluster', Boolean, first, false)
+  $reset_cluster = lookup('protogalaxy::reset_cluster', Boolean, first, false)
+}

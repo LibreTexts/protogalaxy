@@ -3,6 +3,8 @@
 # @example
 #   include protogalaxy::role::management
 
-class protogalaxy::role::management {
-  contain protogalaxy::packages
+class protogalaxy::role::management inherits protogalaxy {
+  require class {'protogalaxy::packages':
+    is_mgmt => true,
+  }
 }

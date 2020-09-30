@@ -22,7 +22,10 @@ class protogalaxy::bootstrap::control_join (
   String $discovery_token = $protogalaxy::discovery_token,
   String $certkey = $protogalaxy::certkey,
   Optional[String] $interface = $protogalaxy::network_interface
-) {
+) inherits protogalaxy {
+  include protogalaxy::services
+  include protogalaxy::packages
+  include protogalaxy::loadbalancer_static_pods
   if ($interface) {
     $advertise_arg = "--apiserver-advertise-address ${facts['networking']['interfaces'][$interface]['ip']}"
   } else {

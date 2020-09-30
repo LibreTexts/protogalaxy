@@ -13,7 +13,8 @@ class protogalaxy::loadbalancer_static_pods::haproxy (
   Array[String] $control_plane_nodes = $protogalaxy::control_plane_nodes,
   String $haproxy_image = $protogalaxy::haproxy_image,
   Optional[String] $_interface = $protogalaxy::network_interface,
-) {
+) inherits protogalaxy {
+  include protogalaxy::services
   $interface = pick($_interface, $facts['networking']['primary'])
   file { '/etc/kubernetes/haproxy.cfg':
     ensure  => file,

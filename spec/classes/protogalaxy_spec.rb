@@ -13,6 +13,7 @@ describe 'protogalaxy' do
 
       it { is_expected.to compile }
     end
+=begin
     context "init control plane node on #{os}" do
       let(:facts) { os_facts }
       let(:params) do
@@ -86,5 +87,6 @@ describe 'protogalaxy' do
 
       it { is_expected.to compile }
     end
+=end
   end
 end

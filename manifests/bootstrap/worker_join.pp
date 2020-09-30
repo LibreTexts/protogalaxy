@@ -15,7 +15,9 @@
 class protogalaxy::bootstrap::worker_join (
   String $kubeapi_ip = $protogalaxy::kubeapi_ip,
   String $discovery_token = $protogalaxy::discovery_token,
-) {
+) inherits protogalaxy {
+  include protogalaxy::services
+  include protogalaxy::packages
   exec { 'kubeadm join cluster as worker':
     command => join(['/usr/bin/kubeadm join',
       "${kubeapi_ip}:6443",

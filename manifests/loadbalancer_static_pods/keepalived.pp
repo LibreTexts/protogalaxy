@@ -10,10 +10,11 @@
 class protogalaxy::loadbalancer_static_pods::keepalived (
   String $vip = $protogalaxy::kubeapi_ip,
   Optional[String] $_interface = $protogalaxy::network_interface,
-  String $keepalived_image = $protogalaxy::keepalived_image
-) {
+  String $keepalived_image = $protogalaxy::keepalived_image,
+  Boolean $is_primary = false,
+) inherits protogalaxy {
+  include protogalaxy::services
   $interface = pick($_interface, $facts['networking']['primary'])
-  $is_primary = ($protogalaxy::role == 'initial_control')
 
   file { '/etc/kubernetes/check_haproxy.sh':
     ensure  => file,

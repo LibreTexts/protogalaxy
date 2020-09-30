@@ -3,14 +3,18 @@
 # @example
 #   include protogalaxy::role::control
 
-class protogalaxy::role::control {
-  contain protogalaxy::disable_swap
-  contain protogalaxy::packages
-  if ($protogalaxy::reset_cluster) {
-    contain protogalaxy::bootstrap::reset
+class protogalaxy::role::control (
+  Boolean $reset_cluster = $protogalaxy::reset_cluster,
+) inherits protogalaxy {
+  require protogalaxy::disable_swap
+  require protogalaxy::packages
+  if $reset_cluster {
+    require protogalaxy::bootstrap::reset
   } else {
-    contain protogalaxy::service
-    contain protogalaxy::loadbalancer_static_pods
-    contain protogalaxy::bootstrap::control_join
+    require protogalaxy::services
+    require class {'protogalaxy::loadbalancer_static_pods':
+      is_initial_control => false,
+    }
+    require protogalaxy::bootstrap::control_join
   }
 }

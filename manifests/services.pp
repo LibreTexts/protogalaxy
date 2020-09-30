@@ -4,12 +4,13 @@
 #   If this boolean is true, do not enforce kubelet to be running.
 #
 # @example
-#   include protogalaxy::service
+#   include protogalaxy::services
 
-class protogalaxy::service (
+class protogalaxy::services (
   Boolean $upgrading_cluster = $protogalaxy::upgrading_cluster,
-){
-  contain protogalaxy::packages
+) inherits protogalaxy {
+  include protogalaxy::packages
+  require protogalaxy::disable_swap
   service { 'docker':
     ensure  => running,
     enable  => true,
