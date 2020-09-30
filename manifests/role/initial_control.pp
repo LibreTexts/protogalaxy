@@ -11,6 +11,6 @@ class protogalaxy::role::initial_control {
   } else {
     contain protogalaxy::service
     contain protogalaxy::loadbalancer_static_pods
-    contain protogalaxy::bootstrap::kubeadm_init
+    contain protogalaxy::bootstrap::init
   }
 }

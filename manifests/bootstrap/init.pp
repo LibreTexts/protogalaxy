@@ -11,13 +11,13 @@
 #   Must be a 64 character long hexadecimal string
 #
 # @example
-#   include protogalaxy::bootstrap::kubeadm_init {
+#   include protogalaxy::bootstrap::init {
 #     kubeapi_ip      => '172.16.10.25',
 #     discovery_token => 'galaxy.8f66ffbc65a6d861',
 #     certkey         => '0e1fe290a032cb3c110ffcde37d93e104b4f560544b1207836d88a093d20982f',
 #   }
 
-class protogalaxy::bootstrap::kubeadm_init (
+class protogalaxy::bootstrap::init (
   String $kubeapi_ip = $protogalaxy::kubeapi_ip,
   String $discovery_token = $protogalaxy::discovery_token,
   String $certkey = $protogalaxy::certkey,
