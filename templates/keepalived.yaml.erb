@@ -22,7 +22,7 @@ spec:
     - mountPath: /etc/keepalived/keepalived.conf
       name: config
       readOnly: true
-    - mountPath: /etc/keepalived/check_apiserver.sh
+    - mountPath: /etc/keepalived/check_haproxy.sh
       name: checker
       readOnly: true
   hostNetwork: true
@@ -31,6 +31,6 @@ spec:
       path: /etc/kubernetes/keepalived.conf
     name: config
   - hostPath:
-      path: /etc/kubernetes/check_apiserver.sh
+      path: /etc/kubernetes/check_haproxy.sh
     name: checker
 status: {}
