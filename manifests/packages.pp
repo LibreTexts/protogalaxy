@@ -25,10 +25,6 @@ class protogalaxy::packages (
   Boolean $upgrading_cluster = $protogalaxy::upgrading_cluster,
 ) inherits protogalaxy {
 
-  if $facts['os']['distro']['codename'] != 'bionic' {
-    warning('Node is not using Ubuntu Bionic Beaver (18.04). This is untested.')
-  }
-
   apt::source { 'docker':
     location => 'https://download.docker.com/linux/ubuntu',
     repos    => 'stable',
