@@ -45,6 +45,9 @@
 #   Since cluster upgrades should be done manually, this turns of package pinning for kubelet.
 #   kubeadm and kubectl are still enforced, so you can use this module to upgrade all kubeadm versions.
 #   See the README in galaxy-control-repo for upgrade documentation.
+#
+# @param reset_cluster
+#   Boolean to include only the manifest for resetting the cluster with kubeadm
 
 class protogalaxy (
   String $kubeapi_ip,
@@ -58,13 +61,17 @@ class protogalaxy (
   String $keepalived_image = 'rkevin/keepalived:2.0.20',
   String $haproxy_image = 'haproxy:2.2-alpine',
   Boolean $upgrading_cluster = false,
+  Boolean $reset_cluster = false,
 ) {
-  case $role {
-    'initial_control': { include protogalaxy::role::initial_control }
-    'control':         { include protogalaxy::role::control }
-    'worker':          { include protogalaxy::role::worker }
-    'management':      { include protogalaxy::role::management }
-    default:           { }
+  if $reset_cluster { include protogalaxy::cluster_reset }
+  else {
+    case $role {
+      'initial_control': { include protogalaxy::role::initial_control }
+      'control':         { include protogalaxy::role::control }
+      'worker':          { include protogalaxy::role::worker }
+      'management':      { include protogalaxy::role::management }
+      default:           { }
+    }
   }
 }
 
