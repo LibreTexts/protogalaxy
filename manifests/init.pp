@@ -55,7 +55,7 @@ class protogalaxy {
   # To actually use this module, please include one of the protogalaxy::role::* classes
 
   $kubeapi_ip = lookup('protogalaxy::kubeapi_ip', String, first)
-  $discovery_token = lookup('protogalaxy::kubeapi_ip', String, first)
+  $discovery_token = lookup('protogalaxy::discovery_token', String, first)
   $certkey = lookup('protogalaxy::certkey', String, first)
   $control_plane_nodes = lookup('protogalaxy::control_plane_nodes', Array[String], first)
   $pod_cidr = lookup('protogalaxy::pod_cidr', String, first)
