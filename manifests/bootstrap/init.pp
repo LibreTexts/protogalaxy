@@ -21,7 +21,9 @@ class protogalaxy::bootstrap::init (
   String $kubeapi_ip = $protogalaxy::kubeapi_ip,
   String $discovery_token = $protogalaxy::discovery_token,
   String $certkey = $protogalaxy::certkey,
-  Optional[String] $interface = $protogalaxy::network_interface
+  Optional[String] $interface = $protogalaxy::network_interface,
+  String $pod_cidr = $protogalaxy::pod_cidr,
+  String $service_cidr = $protogalaxy::service_cidr,
 ) inherits protogalaxy {
   include protogalaxy::services
   include protogalaxy::packages
@@ -37,7 +39,9 @@ class protogalaxy::bootstrap::init (
       '--upload-certs',
       "--token ${discovery_token}",
       "--certificate-key ${certkey}",
-      $advertise_arg], ' '),
+      $advertise_arg,
+      "--pod-network-cidr ${pod_cidr}",
+      "--service-cidr ${service_cidr}"], ' '),
     creates => '/etc/kubernetes/kubelet.conf',
     require => [
       Service['kubelet'],

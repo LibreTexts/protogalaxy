@@ -15,6 +15,12 @@
 #   node to know who each other are. Specify this as a list of strings, where each string is
 #   "HOSTNAME:IP".
 #
+# @param pod_cidr
+#   The desired pod CIDR to pass to kubeadm --pod-network-cidr. Defaults to an empty string.
+#
+# @param service_cidr
+#   The desired service CIDR to pass to kubeadm --service-cidr. Defaults to 10.96.0.0/12.
+#
 # @param k8s_version
 #   Version of the kubeadm, kubelet and kubectl packages to install,
 #   along with the control plane version. Defaults to 1.18.5.
@@ -52,6 +58,8 @@ class protogalaxy {
   $discovery_token = lookup('protogalaxy::kubeapi_ip', String, first)
   $certkey = lookup('protogalaxy::certkey', String, first)
   $control_plane_nodes = lookup('protogalaxy::control_plane_nodes', Array[String], first)
+  $pod_cidr = lookup('protogalaxy::pod_cidr', String, first)
+  $service_cidr = lookup('protogalaxy::service_cidr', String, first, '10.96.0.0/12')
   $k8s_version = lookup('protogalaxy::k8s_version', String, first, '1.19.2')
   $docker_version = lookup('protogalaxy::docker_version', String, first, '5:19.03.13~3-0~ubuntu-bionic')
   $network_interface = lookup('protogalaxy::network_interface', Optional[String], first, undef)
