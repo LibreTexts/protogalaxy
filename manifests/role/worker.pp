@@ -5,6 +5,10 @@
 class protogalaxy::role::worker {
   contain protogalaxy::disable_swap
   contain protogalaxy::packages
-  contain protogalaxy::service
-  contain protogalaxy::bootstrap::worker_join
+  if ($protogalaxy::reset_cluster) {
+    contain protogalaxy::bootstrap::reset
+  } else {
+    contain protogalaxy::service
+    contain protogalaxy::bootstrap::worker_join
+  }
 }

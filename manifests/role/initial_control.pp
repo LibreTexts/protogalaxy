@@ -6,7 +6,11 @@
 class protogalaxy::role::initial_control {
   contain protogalaxy::disable_swap
   contain protogalaxy::packages
-  contain protogalaxy::service
-  contain protogalaxy::loadbalancer_static_pods
-  contain protogalaxy::bootstrap::kubeadm_init
+  if ($protogalaxy::reset_cluster) {
+    contain protogalaxy::bootstrap::reset
+  } else {
+    contain protogalaxy::service
+    contain protogalaxy::loadbalancer_static_pods
+    contain protogalaxy::bootstrap::kubeadm_init
+  }
 }

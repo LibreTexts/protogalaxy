@@ -63,15 +63,12 @@ class protogalaxy (
   Boolean $upgrading_cluster = false,
   Boolean $reset_cluster = false,
 ) {
-  if $reset_cluster { include protogalaxy::cluster_reset }
-  else {
-    case $role {
-      'initial_control': { include protogalaxy::role::initial_control }
-      'control':         { include protogalaxy::role::control }
-      'worker':          { include protogalaxy::role::worker }
-      'management':      { include protogalaxy::role::management }
-      default:           { }
-    }
+  case $role {
+    'initial_control': { include protogalaxy::role::initial_control }
+    'control':         { include protogalaxy::role::control }
+    'worker':          { include protogalaxy::role::worker }
+    'management':      { include protogalaxy::role::management }
+    default:           { }
   }
 }
 

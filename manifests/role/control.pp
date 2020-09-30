@@ -6,7 +6,11 @@
 class protogalaxy::role::control {
   contain protogalaxy::disable_swap
   contain protogalaxy::packages
-  contain protogalaxy::service
-  contain protogalaxy::loadbalancer_static_pods
-  contain protogalaxy::bootstrap::control_join
+  if ($protogalaxy::reset_cluster) {
+    contain protogalaxy::bootstrap::reset
+  } else {
+    contain protogalaxy::service
+    contain protogalaxy::loadbalancer_static_pods
+    contain protogalaxy::bootstrap::control_join
+  }
 }
