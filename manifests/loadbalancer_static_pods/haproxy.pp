@@ -10,7 +10,7 @@
 
 class protogalaxy::loadbalancer_static_pods::haproxy (
   String $vip = $protogalaxy::kubeapi_ip,
-  Array[String] $control_plane_nodes = $protogalaxy::control_plane_nodes,
+  Hash[String,String] $control_plane_nodes = $protogalaxy::control_plane_nodes,
   String $haproxy_image = $protogalaxy::haproxy_image,
 ) inherits protogalaxy {
   include protogalaxy::services

@@ -31,7 +31,7 @@
 # @param network_interface
 #   Specify the network interface where the other nodes are reachable.
 #   If this is your default interface, you may omit it.
-#   This affects keepalived, HAProxy, and the kube-apiserver.
+#   This only affects keepalived.
 #
 # @param keepalived_image
 #   Docker image to be used for the keepalived static pod.
@@ -57,7 +57,7 @@ class protogalaxy {
   $kubeapi_ip = lookup('protogalaxy::kubeapi_ip', String, first)
   $discovery_token = lookup('protogalaxy::discovery_token', String, first)
   $certkey = lookup('protogalaxy::certkey', String, first)
-  $control_plane_nodes = lookup('protogalaxy::control_plane_nodes', Array[String], first)
+  $control_plane_nodes = lookup('protogalaxy::control_plane_nodes', Hash[String,String], first)
   $pod_cidr = lookup('protogalaxy::pod_cidr', String, first)
   $service_cidr = lookup('protogalaxy::service_cidr', String, first, '10.96.0.0/12')
   $k8s_version = lookup('protogalaxy::k8s_version', String, first, '1.19.2')
