@@ -21,16 +21,10 @@ class protogalaxy::bootstrap::control_join (
   String $kubeapi_ip = $protogalaxy::kubeapi_ip,
   String $discovery_token = $protogalaxy::discovery_token,
   String $certkey = $protogalaxy::certkey,
-  Optional[String] $interface = $protogalaxy::network_interface
 ) inherits protogalaxy {
   include protogalaxy::services
   include protogalaxy::packages
   include protogalaxy::loadbalancer_static_pods
-  if ($interface) {
-    $advertise_arg = "--apiserver-advertise-address ${facts['networking']['interfaces'][$interface]['ip']}"
-  } else {
-    $advertise_arg = ''
-  }
   exec { 'kubeadm join cluster as control plane node':
     command => join(['/usr/bin/kubeadm join',
       "${kubeapi_ip}:6443",
@@ -39,7 +33,7 @@ class protogalaxy::bootstrap::control_join (
       '--discovery-token-unsafe-skip-ca-verification',
       "--certificate-key ${certkey}",
       '--ignore-preflight-errors=DirAvailable--etc-kubernetes-manifests',
-      $advertise_arg], ' '),
+      '--apiserver-bind-port 16443'], ' '),
     creates => '/etc/kubernetes/kubelet.conf',
     require => [
       Service['kubelet'],

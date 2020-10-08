@@ -33,5 +33,5 @@ backend apiserver
     option ssl-hello-chk
     balance     roundrobin
 <% @control_plane_nodes.each do |host, ip| %>
-        server <%= host %> <%= ip %>:6443 check
+        server <%= host %> <%= ip %>:16443 check
 <% end %>

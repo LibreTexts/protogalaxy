@@ -23,25 +23,17 @@ class protogalaxy::bootstrap::init (
   String $certkey = $protogalaxy::certkey,
   String $pod_cidr = $protogalaxy::pod_cidr,
   String $service_cidr = $protogalaxy::service_cidr,
-  Hash[String,String] $control_plane_nodes = $protogalaxy::control_plane_nodes
 ) inherits protogalaxy {
   include protogalaxy::services
   include protogalaxy::packages
   include protogalaxy::loadbalancer_static_pods
-  $advertise_ip = $control_plane_nodes[$facts['networking']['hostname']]
-  if ($advertise_ip) {
-    $advertise_arg = "--apiserver-advertise-address ${advertise_ip}"
-  } else {
-    err('This control plane node seems to not be listed in the protogalaxy::control_plane_nodes variable. Load balancing may not work.')
-    $advertise_arg = ''
-  }
   exec { 'kubeadm initialize cluster':
     command => join(['/usr/bin/kubeadm init',
       "--control-plane-endpoint ${kubeapi_ip}",
       '--upload-certs',
       "--token ${discovery_token}",
       "--certificate-key ${certkey}",
-      $advertise_arg,
+      "--apiserver-bind-port 16443",
       "--pod-network-cidr ${pod_cidr}",
       "--service-cidr ${service_cidr}"], ' '),
     creates => '/etc/kubernetes/kubelet.conf',
