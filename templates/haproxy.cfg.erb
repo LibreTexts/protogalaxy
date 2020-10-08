@@ -21,7 +21,7 @@ defaults
     timeout check           10s
 
 frontend apiserver
-    bind *:<%= @vip %>
+    bind <%= @vip %>:6443
     mode tcp
     option tcplog
     default_backend apiserver
