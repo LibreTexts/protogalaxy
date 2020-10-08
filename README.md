@@ -45,13 +45,19 @@ We have 4 types of nodes:
 
 The main point of this design is to make sure no matter which node goes down, the cluster can continue running. This means we can't just specify one control plane node as the k8s API endpoint, because when that node goes down, even if the control plane is still functional, all workers cannot communicate with the control plane. Therefore, we're using a keepalived + HAProxy setup as a load balancer.
 
-We reserve a "virtual IP" that is controlled by the load balancer. You should make sure this IP is in the CIDR of nodes, but not conflict with any node IP. As an example, our cluster uses 10.0.0.1/24 for nodes, and all machines use something between 10.0.0.100~10.0.0.120. We chose 10.0.0.150 as the virtual IP. This IP is where the kubernetes API server will be accessible at.
+We reserve a "virtual IP" that is controlled by keepalived. You should make sure this IP is in the CIDR of nodes, but not conflict with any node IP. As an example, our cluster uses 10.0.0.1/24 for nodes, and all machines use something between 10.0.0.100~10.0.0.120. We chose 10.0.0.150 as the virtual IP. This IP is where the kubernetes API server will be accessible at.
 
 #### keepalived
 
+[keepalived](https://www.keepalived.org/) manages the virtual IP address among all the control plane nodes. Only one node will hold the IP at a given time. Most of the time it is the initial control plane node, but if it goes down then keepalived will notice and assign the IP to a different node. This ensures the virtual IP will always be held by someone.
+
+Protogalaxy configures keepalived using three files: [keepalived.yaml](templates/keepalived.yaml.erb) is the static pod manifest that kubelet uses to spawn the keepalived pod, [keepalived.conf](templates/keepalived.conf.erb) is its config file, and [check_haproxy.sh](templates/check_haproxy.sh) is the helper script that reports when HAProxy isn't working, so keepalived will try to report itself as broken.
 
 #### HAProxy
 
+[HAProxy](https://www.haproxy.org/) is our load balancer for the k8s API server. When someone accesses `https://kubeapi-virtual-ip:6443`, it goes to the node that currently holds the IP due to keepalived. To load balance it, this request goes to HAProxy, which round-robins it to any one of `https://actual-control-plane-node:16443`. All actual kube-apiservers listen on port 16443.
+
+Note that while only one HAProxy is accessible at a time, each control plane node runs its own HAProxy, so when one node fails, the other nodes have a HAProxy ready to load-balance requests immediately after keepalived handles the virtual IP.
 
 ## Setup
 
