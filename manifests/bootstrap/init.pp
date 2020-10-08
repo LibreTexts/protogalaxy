@@ -29,7 +29,7 @@ class protogalaxy::bootstrap::init (
   include protogalaxy::loadbalancer_static_pods
   exec { 'kubeadm initialize cluster':
     command => join(['/usr/bin/kubeadm init',
-      "--control-plane-endpoint ${kubeapi_ip}",
+      "--control-plane-endpoint ${kubeapi_ip}:6443",
       '--upload-certs',
       "--token ${discovery_token}",
       "--certificate-key ${certkey}",
