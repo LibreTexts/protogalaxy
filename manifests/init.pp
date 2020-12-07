@@ -25,9 +25,6 @@
 #   Version of the kubeadm, kubelet and kubectl packages to install,
 #   along with the control plane version. Defaults to 1.18.5.
 #
-# @param docker_version
-#   Version of docker to install. Defaults to 5:19.03.12~3-0~ubuntu-bionic.
-#
 # @param network_interface
 #   Specify the network interface where the other nodes are reachable.
 #   If this is your default interface, you may omit it.
@@ -61,7 +58,6 @@ class protogalaxy {
   $pod_cidr = lookup('protogalaxy::pod_cidr', String, first)
   $service_cidr = lookup('protogalaxy::service_cidr', String, first, '10.96.0.0/12')
   $k8s_version = lookup('protogalaxy::k8s_version', String, first, '1.19.2')
-  $docker_version = lookup('protogalaxy::docker_version', String, first, '5:19.03.13~3-0~ubuntu-bionic')
   $network_interface = lookup('protogalaxy::network_interface', Optional[String], first, undef)
   $keepalived_image = lookup('protogalaxy::keepalived_image', String, first, 'rkevin/keepalived:2.0.20')
   $haproxy_image = lookup('protogalaxy::haproxy_image', String, first, 'haproxy:2.2-alpine')

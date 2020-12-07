@@ -3,9 +3,6 @@
 # @param k8s_version
 #   Version of the kubeadm, kubelet and kubectl packages to install.
 #
-# @param docker_version
-#   Version of docker-ce to install.
-#
 # @param is_mgmt
 #   Whether this node should only install packages relavent to kubernetes management.
 #
@@ -15,12 +12,10 @@
 # @example
 #   include protogalaxy::packages {
 #     k8s_version => '1.18.5',
-#     docker_version => '5:19.03.12~3-0~ubuntu-bionic',
 #   }
 
 class protogalaxy::packages (
   String $k8s_version = $protogalaxy::k8s_version,
-  String $docker_version = $protogalaxy::docker_version,
   Boolean $is_mgmt = false,
   Boolean $upgrading_cluster = $protogalaxy::upgrading_cluster,
 ) inherits protogalaxy {
@@ -62,8 +57,8 @@ class protogalaxy::packages (
       unless   => "test -e /usr/local/bin/helm -a $(helm version --template '{{.Version}}') = ${latest_helm_version}",
     }
   } else {
-    package { 'docker-ce':
-      ensure  => $docker_version,
+    package { 'containerd.io':
+      ensure  => present,
       require => Class['Apt::Update'],
     }
     package { ['kubectl', 'kubeadm']:
