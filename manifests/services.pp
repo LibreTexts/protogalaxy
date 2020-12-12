@@ -35,8 +35,8 @@ class protogalaxy::services (
         false => Package['kubelet'],
       },
       Class['protogalaxy::disable_swap'],
-      kmod::load['br_netfilter'],
-      sysctl::value['net.ipv4.forward'],
+      Class['kmod::load::br_netfilter'],
+      Class['sysctl::value::net.ipv4.forward'],
     ],
   }
 }
