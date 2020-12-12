@@ -24,7 +24,7 @@ class protogalaxy::services (
     command  => 'rm /etc/containerd/config.toml',
     provider => shell,
     onlyif   => 'grep \'disabled_plugins = \["cri"\]\' /etc/containerd/config.toml',
-    notify   => service['containerd'],
+    notify   => Service['containerd'],
   }
 
   service { 'containerd':
