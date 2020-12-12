@@ -27,6 +27,10 @@ class protogalaxy::services (
     notify   => Service['containerd'],
   }
 
+  file { '/etc/crictl.yaml':
+    content => "runtime-endpoint: unix:///run/containerd/containerd.sock\nimage-endpoint: unix:///run/containerd/containerd.sock",
+  }
+
   service { 'containerd':
     ensure  => running,
     enable  => true,
