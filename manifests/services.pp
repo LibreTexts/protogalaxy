@@ -22,6 +22,7 @@ class protogalaxy::services (
 
   exec { 'ensure containerd does not disable cri':
     command => 'rm /etc/containerd/config.toml',
+    provider => shell,
     onlyif  => 'grep \'disabled_plugins = \["cri"\]\' /etc/containerd/config.toml',
   }
 
