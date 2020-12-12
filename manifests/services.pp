@@ -21,18 +21,16 @@ class protogalaxy::services (
   }
 
   exec { 'ensure containerd does not disable cri':
-    command => 'rm /etc/containerd/config.toml',
+    command  => 'rm /etc/containerd/config.toml',
     provider => shell,
-    onlyif  => 'grep \'disabled_plugins = \["cri"\]\' /etc/containerd/config.toml',
+    onlyif   => 'grep \'disabled_plugins = \["cri"\]\' /etc/containerd/config.toml',
+    notify   => service['containerd'],
   }
 
   service { 'containerd':
     ensure  => running,
     enable  => true,
-    require => [
-      Package['containerd.io'],
-      Exec['ensure containerd does not disable cri'],
-    ]
+    require => Package['containerd.io'],
   }
   service { 'kubelet':
     ensure  => running,
