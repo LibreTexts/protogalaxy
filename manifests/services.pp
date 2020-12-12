@@ -16,7 +16,7 @@ class protogalaxy::services (
     ensure => present,
   }
 
-  sysctl::value { 'net.ipv4.forward':
+  sysctl::value { 'net.ipv4.ip_forward':
     value => 1,
   }
 
@@ -36,7 +36,7 @@ class protogalaxy::services (
       },
       Class['protogalaxy::disable_swap'],
       Kmod::Load['br_netfilter'],
-      Sysctl::Value['net.ipv4.forward'],
+      Sysctl::Value['net.ipv4.ip_forward'],
     ],
   }
 }
