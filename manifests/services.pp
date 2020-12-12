@@ -11,6 +11,15 @@ class protogalaxy::services (
 ) inherits protogalaxy {
   include protogalaxy::packages
   require protogalaxy::disable_swap
+
+  kmod::load { 'br_netfilter':
+    ensure => present,
+  }
+
+  sysctl::value { 'net.ipv4.forward':
+    value => 1,
+  }
+
   service { 'containerd':
     ensure  => running,
     enable  => true,
@@ -26,6 +35,8 @@ class protogalaxy::services (
         false => Package['kubelet'],
       },
       Class['protogalaxy::disable_swap'],
+      kmod::load['br_netfilter'],
+      sysctl::value['net.ipv4.forward'],
     ],
   }
 }

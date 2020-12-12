@@ -6,7 +6,10 @@
   "license": "Apache-2.0",
   "source": "https://github.com/LibreTexts/protogalaxy",
   "dependencies": [
-
+    {
+      "name": "camptocamp/kmod",
+      "version_requirement": "2.5.0"
+    }
   ],
   "operatingsystem_support": [
     {
