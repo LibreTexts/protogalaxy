@@ -33,7 +33,7 @@ class protogalaxy::bootstrap::init (
       '--upload-certs',
       "--token ${discovery_token}",
       "--certificate-key ${certkey}",
-      "--apiserver-bind-port 16443",
+      '--apiserver-bind-port 16443',
       "--pod-network-cidr ${pod_cidr}",
       "--service-cidr ${service_cidr}"], ' '),
     creates => '/etc/kubernetes/kubelet.conf',
