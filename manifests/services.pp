@@ -1,4 +1,4 @@
-# @summary Class to ensure the docker service and kubelet service are always running
+# @summary Class to ensure the containerd service and kubelet service are always running
 #
 # @param upgrading_cluster
 #   If this boolean is true, do not enforce kubelet to be running.
@@ -11,21 +11,43 @@ class protogalaxy::services (
 ) inherits protogalaxy {
   include protogalaxy::packages
   require protogalaxy::disable_swap
-  service { 'docker':
+
+  kmod::load { 'br_netfilter':
+    ensure => present,
+  }
+
+  sysctl::value { 'net.ipv4.ip_forward':
+    value => 1,
+  }
+
+  exec { 'ensure containerd does not disable cri':
+    command  => 'rm /etc/containerd/config.toml',
+    provider => shell,
+    onlyif   => 'grep \'disabled_plugins = \["cri"\]\' /etc/containerd/config.toml',
+    notify   => Service['containerd'],
+  }
+
+  file { '/etc/crictl.yaml':
+    content => "runtime-endpoint: unix:///run/containerd/containerd.sock\nimage-endpoint: unix:///run/containerd/containerd.sock",
+  }
+
+  service { 'containerd':
     ensure  => running,
     enable  => true,
-    require => Package['docker-ce'],
+    require => Package['containerd.io'],
   }
   service { 'kubelet':
     ensure  => running,
     enable  => true,
     require => [
-      Service['docker'],
+      Service['containerd'],
       $upgrading_cluster ? {
         true  => undef,
         false => Package['kubelet'],
       },
       Class['protogalaxy::disable_swap'],
+      Kmod::Load['br_netfilter'],
+      Sysctl::Value['net.ipv4.ip_forward'],
     ],
   }
 }
