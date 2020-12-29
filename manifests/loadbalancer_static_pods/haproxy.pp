@@ -9,7 +9,7 @@
 #   include protogalaxy::loadbalancer_static_pods::haproxy
 
 class protogalaxy::loadbalancer_static_pods::haproxy (
-  Hash[String,String] $control_plane_nodes = $protogalaxy::control_plane_nodes,
+  Array[String] $control_plane_nodes = $protogalaxy::control_plane_nodes,
   String $haproxy_image = $protogalaxy::haproxy_image,
 ) inherits protogalaxy {
   include protogalaxy::services

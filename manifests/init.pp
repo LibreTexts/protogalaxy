@@ -12,8 +12,7 @@
 #
 # @param control_plane_nodes
 #   A list of all control plane nodes. This is used by the load balancers on each control plane
-#   node to know who each other are. Specify this as a list of strings, where each string is
-#   "HOSTNAME:IP".
+#   node to know who each other are. Specify this as a list of strings of either IP addresses or hostnames (if you have DNS).
 #
 # @param pod_cidr
 #   The desired pod CIDR to pass to kubeadm --pod-network-cidr. Defaults to an empty string.
@@ -54,7 +53,7 @@ class protogalaxy {
   $kubeapi_ip = lookup('protogalaxy::kubeapi_ip', String, first)
   $discovery_token = lookup('protogalaxy::discovery_token', String, first)
   $certkey = lookup('protogalaxy::certkey', String, first)
-  $control_plane_nodes = lookup('protogalaxy::control_plane_nodes', Hash[String,String], first)
+  $control_plane_nodes = lookup('protogalaxy::control_plane_nodes', Array[String], first)
   $pod_cidr = lookup('protogalaxy::pod_cidr', String, first)
   $service_cidr = lookup('protogalaxy::service_cidr', String, first, '10.96.0.0/12')
   $k8s_version = lookup('protogalaxy::k8s_version', String, first, '1.19.2')
