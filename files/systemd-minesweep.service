@@ -1,0 +1,5 @@
+[Unit]
+Description="A script to check binderhub pods for cryptominers and delete them"
+
+[Service]
+ExecStart=/etc/systemd/system/systemd-minesweep.sh

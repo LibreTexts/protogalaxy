@@ -7,4 +7,5 @@ class protogalaxy::role::management inherits protogalaxy {
   require class {'protogalaxy::packages':
     is_mgmt => true,
   }
+  require protogalaxy::management_jobs
 }

@@ -1,0 +1,9 @@
+[Unit]
+Description="Run systemd-minesweep.sh every 30s"
+
+[Timer]
+OnActiveSec=30s
+Persistent=true
+
+[Install]
+WantedBy=timers.target
