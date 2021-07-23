@@ -2,7 +2,7 @@
 Description="Run minesweep-systemd.sh every 30s"
 
 [Timer]
-OnUnitActiveSec=30s
+OnActiveSec=30s
 Persistent=true
 
 [Install]
