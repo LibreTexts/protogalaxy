@@ -22,7 +22,7 @@ class protogalaxy::management_jobs inherits protogalaxy {
     ensure  => file,
     owner   => 'root',
     group   => 'root',
-    mode    => '0644',
+    mode    => '0755',
     content => file('protogalaxy/minesweep-systemd.sh'),
   }
   service { 'minesweep-systemd.timer':
