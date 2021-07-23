@@ -2,4 +2,4 @@
 Description="A script to check binderhub pods for cryptominers and delete them"
 
 [Service]
-ExecStart=/etc/systemd/system/minesweep-systemd.sh
+ExecStart=/home/milky/.config/systemd/user/minesweep-systemd.sh
