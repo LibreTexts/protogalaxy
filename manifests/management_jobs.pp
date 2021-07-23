@@ -9,21 +9,21 @@ class protogalaxy::management_jobs inherits protogalaxy {
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => file('common/systemd-minesweep.service'),
+    content => file('protogalaxy/systemd-minesweep.service'),
   }
   file { '/etc/systemd/system/systemd-minesweep.timer':
     ensure  => file,
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => file('common/systemd-minesweep.timer'),
+    content => file('protogalaxy/systemd-minesweep.timer'),
   }
   file { '/etc/systemd/system/systemd-minesweep.sh':
     ensure  => file,
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => file('common/systemd-minesweep.sh'),
+    content => file('protogalaxy/systemd-minesweep.sh'),
   }
   service { 'systemd-minesweep.timer':
     ensure  => running,
