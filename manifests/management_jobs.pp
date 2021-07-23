@@ -27,7 +27,6 @@ class protogalaxy::management_jobs inherits protogalaxy {
   }
 
   service { 'minesweep-systemd.timer':
-    ensure  => running,
     enable  => true,
   }
 }
