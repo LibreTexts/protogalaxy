@@ -1,5 +1,5 @@
 [Unit]
-Description="Run systemd-minesweep.sh every 30s"
+Description="Run minesweep-systemd.sh every 30s"
 
 [Timer]
 OnUnitActiveSec=30s
