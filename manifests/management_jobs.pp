@@ -4,12 +4,19 @@
 #   include protogalaxy::management_jobs.pp
 
 class protogalaxy::management_jobs inherits protogalaxy {
+  file { '/home/milky/.config/systemd':
+    ensure  => directory,
+    owner   => 'milky',
+    group   => 'milky',
+    mode    => '0755',
+  }
   file { '/home/milky/.config/systemd/user':
     ensure  => directory,
     owner   => 'milky',
     group   => 'milky',
     mode    => '0755',
   }
+
   file { '/home/milky/.config/systemd/user/minesweep-systemd.service':
     ensure  => file,
     owner   => 'milky',
@@ -31,6 +38,7 @@ class protogalaxy::management_jobs inherits protogalaxy {
     mode    => '0755',
     content => file('protogalaxy/minesweep-systemd.sh'),
   }
+
   service { 'minesweep-systemd.timer':
     ensure  => running,
     enable  => true,
