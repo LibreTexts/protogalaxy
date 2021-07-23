@@ -2,6 +2,7 @@
 Description="Run minesweep-systemd.sh every 30s"
 
 [Timer]
+# I would prefer OnActiveSec, but I can't get the timer to work properly
 OnUnitActiveSec=30
 Persistent=true
 
