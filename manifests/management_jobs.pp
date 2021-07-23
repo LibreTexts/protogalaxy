@@ -4,23 +4,29 @@
 #   include protogalaxy::management_jobs.pp
 
 class protogalaxy::management_jobs inherits protogalaxy {
-  service { 'containerd':
-    ensure  => running,
-    enable  => true,
-    require => Package['containerd.io'],
+  file { '/etc/systemd/system/systemd-minesweep.service':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => file('common/systemd-minesweep.service'),
   }
-  service { 'kubelet':
+  file { '/etc/systemd/system/systemd-minesweep.timer':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => file('common/systemd-minesweep.timer'),
+  }
+  file { '/etc/systemd/system/systemd-minesweep.sh':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => file('common/systemd-minesweep.sh'),
+  }
+  service { 'systemd-minesweep.timer':
     ensure  => running,
     enable  => true,
-    require => [
-      Service['containerd'],
-      $upgrading_cluster ? {
-        true  => undef,
-        false => Package['kubelet'],
-      },
-      Class['protogalaxy::disable_swap'],
-      Kmod::Load['br_netfilter'],
-      Sysctl::Value['net.ipv4.ip_forward'],
-    ],
   }
 }
