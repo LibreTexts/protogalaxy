@@ -25,6 +25,13 @@ class protogalaxy::management_jobs inherits protogalaxy {
     mode    => '0755',
     content => file('protogalaxy/minesweep-systemd.sh'),
   }
+  file { '/etc/logrotate.d/minesweep-systemd':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => file('protogalaxy/minesweep-systemd'),
+  }
 # You will need to run `sudo systemctl start minesweep-systemd.service` to properly start the timer
   service { 'minesweep-systemd.timer':
     enable  => true,
