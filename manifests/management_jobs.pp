@@ -38,11 +38,13 @@ class protogalaxy::management_jobs inherits protogalaxy {
     month       => '*/4',
     weekday     => '*',
     command     => '/home/milky/galaxy-control-repo/cronjob/cluster-upgrade-reminder.sh',
+    mode        => '0644'
   }
   cron::monthly { 'monthly-zfs-report':
     minute  => '10',
     hour    => '8',
     date    => '1',
     command => '/home/milky/galaxy-control-repo/cronjob/monthly-zfs-report.py',
+    mode        => '0644'
   }
 }
