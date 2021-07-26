@@ -25,9 +25,24 @@ class protogalaxy::management_jobs inherits protogalaxy {
     mode    => '0755',
     content => file('protogalaxy/minesweep-systemd.sh'),
   }
-
 # You will need to run `sudo systemctl start minesweep-systemd.service` to properly start the timer
   service { 'minesweep-systemd.timer':
     enable  => true,
+  }
+
+
+  cron::job { 'cluster-upgrade-reminder':
+    minute      => '0',
+    hour        => '8',
+    date        => '1',
+    month       => '*/4',
+    weekday     => '*',
+    command     => '/home/milky/galaxy-control-repo/cronjob/cluster-upgrade-reminder.sh',
+  }
+  cron::monthly { 'monthly-zfs-report':
+    minute  => '10',
+    hour    => '8',
+    date    => '1',
+    command => '/home/milky/galaxy-control-repo/cronjob/monthly-zfs-report.py',
   }
 }
