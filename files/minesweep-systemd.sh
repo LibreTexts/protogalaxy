@@ -2,7 +2,7 @@
 
 kubectl get pods -n binderhub | awk '/jupyter-/{print $1}' | while read POD; do
     cat /home/milky/miners.txt | while read LINE; do
-        kubectl exec -n binderhub -c notebook $POD -- pgrep -f "$LINE" 2> /dev/null
+        kubectl exec -n binderhub -c notebook $POD -- pgrep -lf "$LINE" 2> /dev/null
         if [ "$?" -eq 0 ]; then
             PID=$(kubectl exec -n binderhub -c notebook $POD -- pgrep -f "$LINE")
             date >> /home/milky/miner-log.txt
