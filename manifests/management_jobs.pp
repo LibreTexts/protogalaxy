@@ -54,4 +54,10 @@ class protogalaxy::management_jobs inherits protogalaxy {
     command => '/home/milky/galaxy-control-repo/cronjob/monthly-zfs-report.py',
     mode        => '0644'
   }
+  cron::daily { 'constant-zfs-check':
+    minute  => '0',
+    hour    => '0',
+    command => '/home/milky/galaxy-control-repo/cronjob/constant-zfs-check.py',
+    mode        => '0644'
+  }
 }
