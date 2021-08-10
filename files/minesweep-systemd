@@ -1,4 +1,5 @@
 /var/log/miner.log {
+    daily
     notifempty
     size=10M
     compress
