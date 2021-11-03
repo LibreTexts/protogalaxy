@@ -49,7 +49,7 @@ class protogalaxy::packages (
     $latest_helm_version = @(EOF/L)
       $(curl -Ls https://github.com/helm/helm/releases | \
       grep 'href="/helm/helm/releases/tag/v3.[0-9]*.[0-9]*\"' | \
-      grep -v no-underline | head -n 1 | cut -d '"' -f 2 | \
+      grep -v no-underline | head -n 1 | cut -d '"' -f 6 | \
       awk '{n=split($NF,a,"/");print a[n]}' | awk 'a !~ $0{print}; {a=$0}')
       | - EOF
     exec { "curl -sL https://get.helm.sh/helm-${latest_helm_version}-linux-amd64.tar.gz | tar zxO linux-amd64/helm > /usr/local/bin/helm":
