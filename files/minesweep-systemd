@@ -1,0 +1,5 @@
+/var/log/miner.log {
+    size=10M
+    compress
+    dateext
+}
